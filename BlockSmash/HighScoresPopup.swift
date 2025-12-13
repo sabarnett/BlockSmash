@@ -1,0 +1,185 @@
+//
+// -----------------------------------------
+// Original project: BlockSmash
+// Original package: BlockSmash
+// Created on: 13/12/2025 by: Steven Barnett
+// Web: http://www.sabarnett.co.uk
+// GitHub: https://www.github.com/sabarnett
+// -----------------------------------------
+// Copyright © 2025 Steven Barnett. All rights reserved.
+//
+
+import SpriteKit
+
+class HighScoresPopup: SKNode {
+
+    private enum NodeNames: String {
+
+        case scoreLabel, closeButton, resetScores
+
+        var name: String {
+            switch self {
+            case .scoreLabel: return "ScoreLabel"
+            case .closeButton: return "CloseButton"
+            case .resetScores: return "ResetScores"
+            }
+        }
+    }
+
+    /// Called when the popup window is closed. This is used by the caller to reset the environment
+    var onClose: () -> Void
+    var highScoreManager: HighScoreManager
+
+    /// The label where the high scores will be displayed. It is a simple graphic
+    /// with a pre-formatted title.
+    private var panel: SKSpriteNode!
+
+    private var background: SKSpriteNode!
+
+    /// Matches the dize of the high scores panel. We use this to correctly position
+    /// anything  that we place on the panel.
+    private let panelSize = CGSize(width: 620, height: 580)
+
+    
+    /// Initialise the high scores window. Note, default anchor point is (0.5, 0.5) so coordinate
+    /// (0, 0) is the center of the screen.
+    /// - Parameters:
+    ///   - scores: The high scores manager with the scores list in it
+    ///   - latestScore: The latest added score
+    ///   - onClose: Called when the node is closed to allow the caller to clean up.
+    init(scores: HighScoreManager, latestScore: Int, onClose: @escaping () -> Void) {
+        self.onClose = onClose
+        self.highScoreManager = scores
+
+        super.init()
+        isUserInteractionEnabled = true
+
+        createBackground()
+        createHighScoresPanel()
+        createCloseButton()
+        createResetButton()
+        createScoreList(scores.scores, latestScore: latestScore)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
+
+    // MARK: - High Scores list
+
+    /// Creates the list of scores, ordered by the score. If there are multiple scores with the
+    /// same value, we order them by the amount of time the player survived to achieve that
+    /// score (longest to shortest). The most recently added score, if known, is highlighted.
+    ///
+    /// - Parameters:
+    ///   - scores: The list of the five highest scores
+    ///   - latestScore: The last score added which we can use to highlight it.
+    private func createScoreList(_ scores: [HighScore], latestScore: Int) {
+        var latestShown = false
+        var isLatest = false
+        let startY: CGFloat = panelSize.height/2 - 200
+        let spacing: CGFloat = 45
+
+        let titles = ScoreTitleNode()
+        titles.position = CGPoint(x: (-panelSize.width/2) + 120, y: startY)
+        panel.addChild(titles)
+
+        for (i, score) in scores.enumerated() {
+            if score.score == latestScore && latestShown == false {
+                latestShown = true
+                isLatest = true
+            } else {
+                isLatest = false
+            }
+            let label = ScoreNode(score: score, isLatest: isLatest)
+
+            label.position = CGPoint(x: (-panelSize.width/2) + 140,
+                                     y: startY - CGFloat(i + 1) * spacing)
+
+            label.name = NodeNames.scoreLabel.name
+            panel.addChild(label)
+        }
+    }
+
+    // MARK: - Animations
+
+    func show() {
+        let fadeIn = SKAction.fadeIn(withDuration: 0.2)
+        background.run(fadeIn)
+
+        let scaleUp = SKAction.scale(to: 1.0, duration: 0.28)
+        scaleUp.timingMode = .easeOut
+
+        panel.run(scaleUp)
+    }
+
+    func hide(completion: @escaping () -> Void = {}) {
+        let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+        background.run(fadeOut)
+
+        let scaleDown = SKAction.scale(to: 0.01, duration: 0.22)
+        scaleDown.timingMode = .easeIn
+        
+        panel.run(scaleDown) {
+            completion()
+            self.onClose()
+        }
+    }
+
+    // MARK: - Touch Handling (Self-contained)
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let location = touch.location(in: panel)
+        let node = panel.atPoint(location)
+
+        if node.name == NodeNames.closeButton.name {
+            hide()
+        }
+
+        if node.name == NodeNames.resetScores.name {
+            highScoreManager.reset()
+            for label in panel.children {
+                if label.name == NodeNames.scoreLabel.name {
+                    label.removeFromParent()
+                }
+            }
+        }
+    }
+
+    // MARK: - UI Creation helpers
+    
+    /// A background node that covers the entire screen and greys out the
+    /// currently active game board.
+    private func createBackground() {
+        background = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.55),
+                                  size: CGSize(width: 4000, height: 4000))
+        background.zPosition = 0
+        addChild(background)
+    }
+
+    private func createHighScoresPanel() {
+        panel = SKSpriteNode(imageNamed: "highScoreBackground")
+        panel.zPosition = 1
+        panel.setScale(0.01) // start small for animation
+        addChild(panel)
+    }
+
+    private func createCloseButton() {
+        let closeButton = SKSpriteNode(imageNamed: "closeButton")
+        closeButton.name = NodeNames.closeButton.name
+        closeButton.position = CGPoint(x: panelSize.width/2 - 45,
+                                       y: panelSize.height/2 - 55)
+        closeButton.zPosition = 2
+        panel.addChild(closeButton)
+    }
+
+    private func createResetButton() {
+        let reset = SKLabelNode(fontNamed: "AvenirNextCondensed-Bold")
+        reset.text = "Reset high scores"
+        reset.fontSize = 24
+        reset.fontColor = .darkGray
+        reset.name = NodeNames.resetScores.name
+        reset.position = CGPoint(x: 0,
+                                 y: (-panelSize.height / 2) + 50)
+        panel.addChild(reset)
+    }
+}

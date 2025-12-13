@@ -10,15 +10,20 @@ import SpriteKit
 
 @objcMembers
 class GameScene: SKScene {
+
     let scoreLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
     let timer = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 500, height: 20))
     let music = SKAudioNode(fileNamed: "winner-winner")
+    let toolbar = ToolbarNode()
+    let highScores = HighScoreManager()
+    let dataModel = SceneDataModel()
 
     let itemSize: CGFloat = 50
     let itemsPerColumn = 12
     let itemsPerRow = 18
     let itemImages = ["black", "blue", "green", "purple", "red", "yellow", "orange"]
 
+    var popup: HighScoresPopup?
     var cols = [[Item]]()
     var currentMatches = Set<Item>()
     var gameStartTime: TimeInterval?
@@ -33,6 +38,11 @@ class GameScene: SKScene {
         let background = SKSpriteNode(imageNamed: "blocks")
         background.zPosition = -2
         addChild(background)
+
+        toolbar.dataModel = SceneDataModel()
+        toolbar.delegate = self
+        toolbar.position = CGPoint(x: frame.maxX - 30, y: 0)
+        addChild(toolbar)
 
         for x in 0 ..< itemsPerRow {
             var col = [Item]()
@@ -249,6 +259,8 @@ class GameScene: SKScene {
         guard isGameOver == false else { return }
         isGameOver = true
 
+        highScores.add(score: score)
+
         let gameOver = SKSpriteNode(imageNamed: "game-over")
         gameOver.zPosition = 100
         addChild(gameOver)
@@ -261,5 +273,69 @@ class GameScene: SKScene {
         addChild(playAgain)
 
         music.removeFromParent()
+
+        if highScores.scoreAdded {
+            showLeaderBoard()
+        }
+    }
+}
+
+// MARK: - Toolbar handling
+
+extension GameScene: ToolbarDelegate {
+    func showLeaderBoard() {
+        let wasPaused = dataModel.gamePaused
+
+        // Pause the game if it isn't already paused.
+        if !wasPaused {
+            playPause(isPaused: true)
+        }
+
+        popup = HighScoresPopup(scores: dataModel.highScores, latestScore: score) {
+            // OnClose - toggle the game back on
+            if !wasPaused {
+                self.playPause(isPaused: false)
+            }
+            self.popup = nil
+        }
+        popup!.position = CGPoint(x: 0, y: 0)
+        popup!.zPosition = 9999
+
+        addChild(popup!)
+        popup!.show()
+    }
+
+    func playPause(isPaused: Bool) {
+        if isPaused  == false {
+            dataModel.gamePaused = false
+//            gameNode.isPaused = false
+//            gameNode.speed = 1
+            self.physicsWorld.speed = 1
+
+            if dataModel.playingSound == false {
+                addChild(music)
+                dataModel.playingSound = true
+            }
+        } else {
+            dataModel.gamePaused = true
+//            gameNode.isPaused = true
+//            gameNode.speed = 0
+            self.physicsWorld.speed = 0
+
+            if dataModel.playingSound {
+                music.removeFromParent()
+                dataModel.playingSound = false
+            }
+        }
+    }
+
+    func playSound(turnOn: Bool) {
+        if turnOn {
+            addChild(music)
+            dataModel.playingSound = true
+        } else {
+            music.removeFromParent()
+            dataModel.playingSound = false
+        }
     }
 }

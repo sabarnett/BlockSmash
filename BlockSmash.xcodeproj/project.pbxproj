@@ -15,6 +15,12 @@
 		51C6E4CB1F951D59001794D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51C6E4CA1F951D59001794D5 /* Assets.xcassets */; };
 		51C6E4CE1F951D59001794D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51C6E4CC1F951D59001794D5 /* LaunchScreen.storyboard */; };
 		E80B869A2EBB9458002FB84C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80B86992EBB9458002FB84C /* Item.swift */; };
+		E88227202EEDBBD800E288AE /* ToolbarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E882271F2EEDBBD800E288AE /* ToolbarNode.swift */; };
+		E88227222EEDBC0000E288AE /* SceneDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88227212EEDBC0000E288AE /* SceneDataModel.swift */; };
+		E88227242EEDBC3E00E288AE /* HighScoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88227232EEDBC3E00E288AE /* HighScoreManager.swift */; };
+		E88227502EEDC22200E288AE /* HighScoresPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E882274F2EEDC22200E288AE /* HighScoresPopup.swift */; };
+		E88227522EEDC24A00E288AE /* ScoreTitleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88227512EEDC24A00E288AE /* ScoreTitleNode.swift */; };
+		E88227542EEDC25600E288AE /* ScoreNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88227532EEDC25600E288AE /* ScoreNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +34,12 @@
 		51C6E4CD1F951D59001794D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		51C6E4CF1F951D59001794D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E80B86992EBB9458002FB84C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E882271F2EEDBBD800E288AE /* ToolbarNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarNode.swift; sourceTree = "<group>"; };
+		E88227212EEDBC0000E288AE /* SceneDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDataModel.swift; sourceTree = "<group>"; };
+		E88227232EEDBC3E00E288AE /* HighScoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreManager.swift; sourceTree = "<group>"; };
+		E882274F2EEDC22200E288AE /* HighScoresPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoresPopup.swift; sourceTree = "<group>"; };
+		E88227512EEDC24A00E288AE /* ScoreTitleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTitleNode.swift; sourceTree = "<group>"; };
+		E88227532EEDC25600E288AE /* ScoreNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -64,6 +76,12 @@
 		51C6E4BC1F951D59001794D5 /* BlockSmash */ = {
 			isa = PBXGroup;
 			children = (
+				E88227532EEDC25600E288AE /* ScoreNode.swift */,
+				E88227512EEDC24A00E288AE /* ScoreTitleNode.swift */,
+				E882274F2EEDC22200E288AE /* HighScoresPopup.swift */,
+				E88227232EEDBC3E00E288AE /* HighScoreManager.swift */,
+				E88227212EEDBC0000E288AE /* SceneDataModel.swift */,
+				E882271F2EEDBBD800E288AE /* ToolbarNode.swift */,
 				51C6E4BD1F951D59001794D5 /* AppDelegate.swift */,
 				51C6E4BF1F951D59001794D5 /* GameScene.sks */,
 				51C6E4C31F951D59001794D5 /* GameScene.swift */,
@@ -155,10 +173,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88227542EEDC25600E288AE /* ScoreNode.swift in Sources */,
 				E80B869A2EBB9458002FB84C /* Item.swift in Sources */,
 				51C6E4C41F951D59001794D5 /* GameScene.swift in Sources */,
 				51C6E4C61F951D59001794D5 /* GameViewController.swift in Sources */,
+				E88227502EEDC22200E288AE /* HighScoresPopup.swift in Sources */,
+				E88227242EEDBC3E00E288AE /* HighScoreManager.swift in Sources */,
+				E88227202EEDBBD800E288AE /* ToolbarNode.swift in Sources */,
+				E88227222EEDBC0000E288AE /* SceneDataModel.swift in Sources */,
 				51C6E4BE1F951D59001794D5 /* AppDelegate.swift in Sources */,
+				E88227522EEDC24A00E288AE /* ScoreTitleNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +334,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BlockSmash/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,6 +355,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BlockSmash/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
