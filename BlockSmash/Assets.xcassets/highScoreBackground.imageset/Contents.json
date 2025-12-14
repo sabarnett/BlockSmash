@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "BlockSmashHighScores.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Artboard1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
