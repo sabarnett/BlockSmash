@@ -29,6 +29,7 @@ class ToolbarNode: SKNode {
         }
     }
 
+    let background = SKSpriteNode(imageNamed: "toolbarBackground")
     let playPause = SKSpriteNode(imageNamed: "pauseButton")
     let playSound = SKSpriteNode(imageNamed: "soundOff")
     let leaderBoard = SKSpriteNode(imageNamed: "leaderBoard")
@@ -36,16 +37,23 @@ class ToolbarNode: SKNode {
     override init() {
         super.init()
 
-        leaderBoard.position = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: 0, y: 0)
+        background.zPosition = 1
+        addChild(background)
+
+        leaderBoard.position = CGPoint(x: 1, y: -55)
         leaderBoard.name = "LeaderBoard"
+        leaderBoard.zPosition = 2
         addChild(leaderBoard)
 
-        playPause.position = CGPoint(x: 0, y: 45)
+        playPause.position = CGPoint(x: 1, y: 0)
         playPause.name = "PlayPause"
+        playPause.zPosition = 2
         addChild(playPause)
 
-        playSound.position = CGPoint(x: 0, y: 90)
+        playSound.position = CGPoint(x: 1, y: 55)
         playSound.name = "PlaySound"
+        playSound.zPosition = 2
         addChild(playSound)
 
         self.isUserInteractionEnabled = true

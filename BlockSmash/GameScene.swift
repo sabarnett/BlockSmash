@@ -15,8 +15,7 @@ class GameScene: SKScene {
     let timer = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 500, height: 20))
     let music = SKAudioNode(fileNamed: "winner-winner")
     let toolbar = ToolbarNode()
-    let highScores = HighScoreManager()
-    let dataModel = SceneDataModel()
+    var dataModel = SceneDataModel()
 
     let itemSize: CGFloat = 50
     let itemsPerColumn = 12
@@ -41,7 +40,7 @@ class GameScene: SKScene {
 
         toolbar.dataModel = SceneDataModel()
         toolbar.delegate = self
-        toolbar.position = CGPoint(x: frame.maxX - 30, y: 0)
+        toolbar.position = CGPoint(x: frame.maxX - 35, y: 0)
         addChild(toolbar)
 
         for x in 0 ..< itemsPerRow {
@@ -76,7 +75,9 @@ class GameScene: SKScene {
         if isGameOver {
             // Play again pressed?
             if let _ = nodes(at: location).first(where: {$0.name == "playAgain"}) {
-                if let scene = SKScene(fileNamed: "GameScene") {
+                if let scene = SKScene(fileNamed: "GameScene") as? GameScene {
+                    dataModel.resetState()
+                    scene.dataModel = dataModel
                     scene.scaleMode = .aspectFill
                     self.view?.presentScene(scene)
                 }
@@ -259,7 +260,7 @@ class GameScene: SKScene {
         guard isGameOver == false else { return }
         isGameOver = true
 
-        highScores.add(score: score)
+        dataModel.highScores.add(score: score)
 
         let gameOver = SKSpriteNode(imageNamed: "game-over")
         gameOver.zPosition = 100
@@ -274,7 +275,7 @@ class GameScene: SKScene {
 
         music.removeFromParent()
 
-        if highScores.scoreAdded {
+        if dataModel.highScores.scoreAdded {
             showLeaderBoard()
         }
     }

@@ -68,6 +68,10 @@ class HighScoreManager {
         guard let decodedData = try? JSONDecoder().decode([HighScore].self, from: gameData) else { return }
 
         highScores = decodedData
+
+        for score in highScores {
+            print(score)
+        }
     }
 
     /// Save the leader board to a JSON file called AsteroidsHighScores in the users documents folder.
