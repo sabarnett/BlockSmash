@@ -13,22 +13,21 @@ import SpriteKit
 
 class ScoreNode: SKNode {
 
-    var scoreLabel = SKLabelNode(fontNamed: "AvenirNextCondensed-Bold")
+    var scoreLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
 
     init(score: HighScore, isLatest: Bool = false) {
         super.init()
 
         if isLatest {
-            let bgNode = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 332, height: 40))
-            bgNode.fillColor = .orange
+            let bgNode = SKShapeNode(rect: CGRect(x: -160, y: -9, width: 320, height: 42))
+            bgNode.fillColor = .green
             addChild(bgNode)
         }
 
-        scoreLabel.fontSize = 30
+        scoreLabel.fontSize = 28
         scoreLabel.fontColor = .black
-        scoreLabel.horizontalAlignmentMode = .left
+        scoreLabel.text = score.score.formatted(.number.precision(.integerLength(0...6)))
         scoreLabel.position = CGPoint(x: 0, y: 0)
-        scoreLabel.text = score.score.formatted(.number.precision(.integerLength(0...4)))
         addChild(scoreLabel)
     }
 

@@ -297,6 +297,7 @@ extension GameScene: ToolbarDelegate {
             if !wasPaused {
                 self.playPause(isPaused: false)
             }
+            self.popup!.removeFromParent()
             self.popup = nil
         }
         popup!.position = CGPoint(x: 0, y: 0)

@@ -79,7 +79,8 @@ class HighScoresPopup: SKNode {
         let spacing: CGFloat = 45
 
         let titles = ScoreTitleNode()
-        titles.position = CGPoint(x: (-panelSize.width/2) + 120, y: startY)
+        titles.position = CGPoint(x: 0, y: startY)
+        titles.zPosition = 20
         panel.addChild(titles)
 
         for (i, score) in scores.enumerated() {
@@ -91,10 +92,11 @@ class HighScoresPopup: SKNode {
             }
             let label = ScoreNode(score: score, isLatest: isLatest)
 
-            label.position = CGPoint(x: (-panelSize.width/2) + 140,
+            label.position = CGPoint(x: 0,
                                      y: startY - CGFloat(i + 1) * spacing)
 
             label.name = NodeNames.scoreLabel.name
+            label.zPosition = 20
             panel.addChild(label)
         }
     }
@@ -152,13 +154,13 @@ class HighScoresPopup: SKNode {
     private func createBackground() {
         background = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.55),
                                   size: CGSize(width: 4000, height: 4000))
-        background.zPosition = 0
+        background.zPosition = 1
         addChild(background)
     }
 
     private func createHighScoresPanel() {
         panel = SKSpriteNode(imageNamed: "highScoreBackground")
-        panel.zPosition = 1
+        panel.zPosition = 10
         panel.setScale(0.01) // start small for animation
         addChild(panel)
     }
@@ -168,7 +170,7 @@ class HighScoresPopup: SKNode {
         closeButton.name = NodeNames.closeButton.name
         closeButton.position = CGPoint(x: panelSize.width/2 - 45,
                                        y: panelSize.height/2 - 55)
-        closeButton.zPosition = 2
+        closeButton.zPosition = 20
         panel.addChild(closeButton)
     }
 
@@ -178,6 +180,7 @@ class HighScoresPopup: SKNode {
         reset.fontSize = 24
         reset.fontColor = .darkGray
         reset.name = NodeNames.resetScores.name
+        reset.zPosition = 20
         reset.position = CGPoint(x: 0,
                                  y: (-panelSize.height / 2) + 50)
         panel.addChild(reset)

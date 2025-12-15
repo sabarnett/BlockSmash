@@ -14,15 +14,13 @@ import SpriteKit
 
 class ScoreTitleNode: SKNode {
 
-    var scoreLabel = SKLabelNode(fontNamed: "AvenirNextCondensed-Bold")
+    var scoreLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
 
     override init() {
         super.init()
 
-        scoreLabel.fontSize = 32
+        scoreLabel.fontSize = 36
         scoreLabel.fontColor = .black
-        scoreLabel.horizontalAlignmentMode = .left
-        scoreLabel.position = CGPoint(x: 0, y: 0)
         scoreLabel.text = "Score"
         addChild(scoreLabel)
     }
