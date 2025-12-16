@@ -28,5 +28,6 @@ final class SceneDataModel: ObservableObject {
 
         // Items we do not reset between games...
 //        playingSound = true
+        print("Reset playing sound: \(playingSound)")
     }
 }

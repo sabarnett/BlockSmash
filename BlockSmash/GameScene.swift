@@ -38,7 +38,7 @@ class GameScene: SKScene {
         background.zPosition = -2
         addChild(background)
 
-        toolbar.dataModel = SceneDataModel()
+        toolbar.dataModel = dataModel
         toolbar.delegate = self
         toolbar.position = CGPoint(x: frame.maxX - 35, y: 0)
         addChild(toolbar)
@@ -65,7 +65,9 @@ class GameScene: SKScene {
         timer.position = CGPoint(x: frame.minX + 70, y: frame.maxY - 80)
         addChild(timer)
 
-        addChild(music)
+        if dataModel.playingSound {
+            addChild(music)
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -88,7 +90,9 @@ class GameScene: SKScene {
         guard let tappedItem = item(at: location) else { return }
         isUserInteractionEnabled = false
         currentMatches.removeAll()
-        run(SKAction.playSoundFileNamed("pop", waitForCompletion: false))
+        if dataModel.playingSound {
+            run(SKAction.playSoundFileNamed("pop", waitForCompletion: false))
+        }
 
         if tappedItem.name == "bomb" {
             triggerSpecialItem(tappedItem)
@@ -225,7 +229,9 @@ class GameScene: SKScene {
         flash.zPosition = -1
         addChild(flash)
 
-        run(SKAction.playSoundFileNamed("smart-bomb", waitForCompletion: false))
+        if dataModel.playingSound {
+            run(SKAction.playSoundFileNamed("smart-bomb", waitForCompletion: false))
+        }
 
         flash.run(SKAction.fadeOut(withDuration: 0.3)) {
             flash.removeFromParent()
@@ -314,6 +320,7 @@ extension GameScene: ToolbarDelegate {
 //            gameNode.speed = 1
             self.physicsWorld.speed = 1
 
+            // TODO: Track sound properly here
             if dataModel.playingSound == false {
                 addChild(music)
                 dataModel.playingSound = true
