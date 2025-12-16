@@ -14,16 +14,16 @@ BlockSmash is one of those really simple games that quickly becomes addictive.
 
 The game is simple, tap on groups of two or more blocks of the same colour. Depending on how many adjacent blocks there are of the same colour, you earn points. The smashed blocks are replaced and the game continues until the timer runs out.
 
-Ok, it is a little more complicated. Clicking on a group of two earns you no points at all. Three gets you points, but not very many. The strategy is to try and build latger blocks which gain you a lot of points. If you hit a single block, the entire board resets to new blocks.
+Ok, it is a little more complicated. Clicking on a group of two earns you no points at all. Three gets you points, but not very many. The strategy is to try and build larger blocks which gain you a lot of points. If you hit a single block, the entire board resets to new blocks.
 
-As a bonus, there will occasionally be a bomb. Tapping this matches all adjaceent blocks, so there are big points to be had.
+As a bonus, there will occasionally be a bomb. Tapping this matches all adjacent blocks, so there are big points to be had.
 
 The original version of this game was produced by Paul Hudson in his [Dive Into Spritekit](https://www.hackingwithswift.com/store/dive-into-spritekit) book. I extended the game to include;
 
 * A countdown bar that canges colour as time runs out.
 * Blocks rather than the original balloons.
 * A better background. The previous one was very distracting.
-* A toolgar on the right to allow you to turn sound on and off and to pause/restart the game. 
+* A toolbar on the right to allow you to turn sound on and off and to pause/restart the game. 
 * A high score system that tracks the last 5 highest scores, plus a toolbar icon to display it at any time.
 
 I'm still new to SpriteKit, so don't expect perfect code. Learning takes time!
