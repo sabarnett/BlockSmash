@@ -316,24 +316,17 @@ extension GameScene: ToolbarDelegate {
     func playPause(isPaused: Bool) {
         if isPaused  == false {
             dataModel.gamePaused = false
-//            gameNode.isPaused = false
-//            gameNode.speed = 1
             self.physicsWorld.speed = 1
 
-            // TODO: Track sound properly here
-            if dataModel.playingSound == false {
+            if dataModel.playingSound {
                 addChild(music)
-                dataModel.playingSound = true
             }
         } else {
             dataModel.gamePaused = true
-//            gameNode.isPaused = true
-//            gameNode.speed = 0
             self.physicsWorld.speed = 0
 
             if dataModel.playingSound {
                 music.removeFromParent()
-                dataModel.playingSound = false
             }
         }
     }
