@@ -47,7 +47,7 @@ class GameScene: SKScene {
             var col = [Item]()
 
             for y in 0 ..< itemsPerColumn {
-                let item = createItem(row: y, col: x)
+                let item = createItem(row: y, col: x, startOffScreen: true)
                 col.append(item)
             }
 
