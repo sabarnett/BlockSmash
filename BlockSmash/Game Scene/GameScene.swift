@@ -47,7 +47,7 @@ class GameScene: SKScene {
             var col = [Item]()
 
             for y in 0 ..< itemsPerColumn {
-                let item = createItem(row: y, col: x, startOffScreen: true)
+                let item = createItem(row: y, col: x, startOffScreen: true, canCreateBomb: false)
                 col.append(item)
             }
 
@@ -134,10 +134,10 @@ class GameScene: SKScene {
         return CGPoint(x: x, y: y)
     }
 
-    func createItem(row: Int, col: Int, startOffScreen: Bool = false) -> Item {
+    func createItem(row: Int, col: Int, startOffScreen: Bool = false, canCreateBomb: Bool = true) -> Item {
         let itemImage: String
 
-        if startOffScreen && Int.random(in: 0..<24) == 0 {
+        if startOffScreen && canCreateBomb && Int.random(in: 0..<24) == 0 {
             itemImage = "bomb"
         } else {
             itemImage = itemImages.randomElement()!
