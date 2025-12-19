@@ -12,10 +12,10 @@ import SpriteKit
 class GameScene: SKScene {
 
     let scoreLabel = SKLabelNode(fontNamed: "Noteworthy-Bold")
-    let timer = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 500, height: 20))
     let music = SKAudioNode(fileNamed: "winner-winner")
     let toolbar = ToolbarNode()
     var dataModel = SceneDataModel()
+    let countdown = CountdownNode()
 
     let itemSize: CGFloat = 50
     let itemsPerColumn = 12
@@ -60,10 +60,8 @@ class GameScene: SKScene {
 
         score = 0
 
-        timer.fillColor = .green
-        timer.strokeColor = .clear
-        timer.position = CGPoint(x: frame.minX + 70, y: frame.maxY - 80)
-        addChild(timer)
+        countdown.position = CGPoint(x: frame.minX, y: frame.maxY - 5)
+        addChild(countdown)
 
         if dataModel.playingSound {
             addChild(music)
@@ -110,12 +108,9 @@ class GameScene: SKScene {
             let elapsed = currentTime - gameStartTime
 //            let remaining = 3 - elapsed
             let remaining = 100 - elapsed
-            timer.xScale = max(0, CGFloat(remaining) / 100)
-            if remaining < 25 {
-                timer.fillColor = .red
-            } else if remaining < 60 {
-                timer.fillColor = .orange
-            }
+
+            let percentDone = max(0, CGFloat(remaining) / 100)
+            countdown.percentRemaining(percentDone)
 
             if remaining <= 0 {
                 endGame()

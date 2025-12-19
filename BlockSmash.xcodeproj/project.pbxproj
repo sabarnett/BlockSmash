@@ -18,6 +18,7 @@
 				App/AppDelegate.swift,
 				App/GameViewController.swift,
 				Assets.xcassets,
+				Components/CountdownNode.swift,
 				"Components/High Scores/HighScoreManager.swift",
 				"Components/High Scores/HighScoresPopup.swift",
 				"Components/High Scores/ScoreNode.swift",
