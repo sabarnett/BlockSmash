@@ -11,27 +11,29 @@
 
 import SpriteKit
 
-class CountdownNode: SKNode {
+class CountdownNode: SKSpriteNode {
 
     let fuel: SKSpriteNode
     var maskNode: SKSpriteNode
 
-    override init() {
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+
         // Fuel gradient is anchored on the left
         fuel = SKSpriteNode(imageNamed: "FuelGuage")
         fuel.anchorPoint = CGPoint(x: 0, y: 0.5)
 
-        // Tghe mask matches the size of the fuel. The colour
-        // 
+        // The mask matches the size of the fuel. The colour
+        // does not matter as it is only a mask for the Crop Node
         maskNode = SKSpriteNode(color: .white, size: fuel.size)
         maskNode.anchorPoint = CGPoint(x: 0, y: 0.5)
 
-        super.init()
-        
+        super.init(texture: texture, color: color, size: size)
+        self.anchorPoint = .zero
+
         let cropNode = SKCropNode()
         cropNode.maskNode = maskNode
         cropNode.addChild(fuel)
-        cropNode.position = CGPoint(x: frame.minX + 70, y: frame.maxY - 75)
+        cropNode.position = CGPoint(x: 0, y: 0)
         addChild(cropNode)
     }
     

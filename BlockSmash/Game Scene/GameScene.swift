@@ -60,7 +60,7 @@ class GameScene: SKScene {
 
         score = 0
 
-        countdown.position = CGPoint(x: frame.minX, y: frame.maxY - 5)
+        countdown.position = CGPoint(x:  frame.minX + 60, y: frame.maxY - 70)
         addChild(countdown)
 
         if dataModel.playingSound {
