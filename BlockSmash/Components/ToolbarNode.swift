@@ -67,6 +67,8 @@ class ToolbarNode: SKNode {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
 
+        generateTouchIndicator(location: location)
+
         let tappedNodes = nodes(at: location)
         if let _ = tappedNodes.first(where: {$0.name == "PlayPause"}) {
             togglePlayPause()
@@ -79,6 +81,36 @@ class ToolbarNode: SKNode {
             // Play/pause sound tapped
             togglePlayMusic()
         }
+    }
+
+    /// Useful when recording video. Places an indicator when the user taps.
+    /// - Parameter location: The place the user tapped.
+    func generateTouchIndicator(location: CGPoint) {
+        if Constants.showTapIndicator == false { return }
+
+        let indicator = SKShapeNode(circleOfRadius: 40)
+        indicator.strokeColor = .red
+        indicator.fillColor = .red
+        indicator.alpha = 0.45
+        indicator.position = location
+        indicator.zPosition = 10
+
+        addChild(indicator)
+
+        let expand = SKAction.scale(to: 1.5, duration: 0.15)
+        let contract = SKAction.scale(to: 0.6, duration: 0.15)
+        let delete = SKAction.removeFromParent()
+        let fadeOut = SKAction.fadeOut(withDuration: 0.15)
+        indicator.run(
+            SKAction.sequence(
+                [
+                    expand,
+                    contract,
+                    fadeOut,
+                    delete
+                ]
+            )
+        )
     }
 
     func togglePlayMusic() {

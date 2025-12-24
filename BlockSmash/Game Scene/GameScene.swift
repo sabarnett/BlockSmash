@@ -72,6 +72,8 @@ class GameScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
 
+        generateTouchIndicator(location: location)
+
         if isGameOver {
             // Play again pressed?
             if let _ = nodes(at: location).first(where: {$0.name == "playAgain"}) {
@@ -118,6 +120,36 @@ class GameScene: SKScene {
         } else {
             gameStartTime = currentTime
         }
+    }
+    
+    /// Useful when recording video. Places an indicator when the user taps.
+    /// - Parameter location: The place the user tapped.
+    func generateTouchIndicator(location: CGPoint) {
+        if Constants.showTapIndicator == false { return }
+
+        let indicator = SKShapeNode(circleOfRadius: 40)
+        indicator.strokeColor = .blue
+        indicator.fillColor = .blue
+        indicator.alpha = 0.45
+        indicator.position = location
+        indicator.zPosition = 10
+
+        addChild(indicator)
+
+        let expand = SKAction.scale(to: 1.5, duration: 0.15)
+        let contract = SKAction.scale(to: 0.6, duration: 0.15)
+        let delete = SKAction.removeFromParent()
+        let fadeOut = SKAction.fadeOut(withDuration: 0.15)
+        indicator.run(
+            SKAction.sequence(
+                [
+                    expand,
+                    contract,
+                    fadeOut,
+                    delete
+                ]
+            )
+        )
     }
 
     func position(for item: Item) -> CGPoint {

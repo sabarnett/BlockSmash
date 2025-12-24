@@ -16,6 +16,7 @@
 			membershipExceptions = (
 				/Localized/App/Main.storyboard,
 				App/AppDelegate.swift,
+				App/Constants.swift,
 				App/GameViewController.swift,
 				Assets.xcassets,
 				Components/CountdownNode.swift,
